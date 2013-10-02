@@ -46,8 +46,6 @@ namespace Inedo.BuildMasterExtensions.MbUnit
 
         protected override void CreateChildControls()
         {
-            base.CreateChildControls();
-
             this.txtExePath = new ValidatingTextBox
             {
                 Required = true,

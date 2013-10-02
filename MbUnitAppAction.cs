@@ -54,15 +54,15 @@ namespace Inedo.BuildMasterExtensions.MbUnit
             var start = DateTime.Now;
 
             this.MBUnit("{0} /rt:xml /rf:\"{1}\" /rnf:{2}",
-                Path.Combine(this.RemoteConfiguration.SourceDirectory, this.TestFile),
-                this.RemoteConfiguration.TempDirectory,
+                Path.Combine(this.Context.SourceDirectory, this.TestFile),
+                this.Context.TempDirectory,
                 fileName
             );
 
             bool result = true;
 
             var doc = new XmlDocument();
-            doc.Load(Path.Combine(this.RemoteConfiguration.TempDirectory, fileName + ".xml"));
+            doc.Load(Path.Combine(this.Context.TempDirectory, fileName + ".xml"));
 
             var testStart = DateTime.Now;
 
@@ -100,11 +100,11 @@ namespace Inedo.BuildMasterExtensions.MbUnit
 
         private void MBUnit(string argsFormat, params string[] args)
         {
-            var workingDir = this.RemoteConfiguration.TempDirectory;
+            var workingDir = this.Context.TempDirectory;
             if (!File.Exists(this.ExePath))
                 throw new InvalidOperationException(string.Format("Could not find MbUnit ({0}).", this.ExePath));
 
-            this.ExecuteCommandLine(this.ExePath, string.Format(argsFormat, args), this.RemoteConfiguration.SourceDirectory);
+            this.ExecuteCommandLine(this.ExePath, string.Format(argsFormat, args), this.Context.SourceDirectory);
         }
     }
 }
